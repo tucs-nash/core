@@ -37,7 +37,7 @@ public class TyCurrency extends BaseModel {
     protected Boolean active;
 
     public TyCurrency() {} 
-	public TyCurrency(Long id) {super(id);} 
+	public TyCurrency(Long id) {this.id = id;} 
 
     public TyCurrency(Long id, String name, String code,
 			String symbol, Boolean symbolBefore,

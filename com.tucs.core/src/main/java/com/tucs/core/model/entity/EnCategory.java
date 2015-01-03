@@ -4,14 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -27,10 +26,10 @@ public class EnCategory extends BaseModel {
 	private static final long serialVersionUID = 731161373035881610L;
 	
 	@Id
-	@SequenceGenerator(name="EN_CATEGORY_SQ", sequenceName="EN_CATEGORY_SQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EN_CATEGORY_SQ")
-	@Column(name="ID")
-	private Long id;
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")	
+	@Column(name="ID", length=255)
+	private String id;
 	
 	@NotNull
 	@Column(nullable=false, length=50, name="NAME")
@@ -75,14 +74,13 @@ public class EnCategory extends BaseModel {
 	private EnUser updatedUser;
 	
 	public EnCategory() {} 
-	public EnCategory(Long id) {super(id);} 
+	public EnCategory(String id) {this.id = id;} 
 	
-	public EnCategory(Long id, String name,
+	public EnCategory(String id, String name,
 			String description, Double budget,
 			EnControl control, EnCategory parent,
 			LocalDateTime createdDate, EnUser createdUser,
 			LocalDateTime updatedDate, EnUser updatedUser) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -96,12 +94,12 @@ public class EnCategory extends BaseModel {
 	}
 
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
 	
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

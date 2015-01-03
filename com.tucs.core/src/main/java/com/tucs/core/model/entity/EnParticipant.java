@@ -4,14 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -28,10 +27,10 @@ public class EnParticipant extends BaseModel {
 	private static final long serialVersionUID = -4125460570021501677L;
 
 	@Id
-	@SequenceGenerator(name="EN_PARTICIPANT_SQ", sequenceName="EN_PARTICIPANT_SQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EN_PARTICIPANT_SQ")
-	@Column(name="ID")
-	private Long id;
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")	
+	@Column(name="ID", length=255)
+	private String id;
 	
 	@NotNull
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -75,9 +74,9 @@ public class EnParticipant extends BaseModel {
 	private EnUser updatedUser;
 	
 	public EnParticipant() {} 
-	public EnParticipant(Long id) {super(id);} 
+	public EnParticipant(String id) {this.id = id;} 
 	
-	public EnParticipant(Long id, EnUser user,
+	public EnParticipant(String id, EnUser user,
 			TyProfile profile, EnGroup group,
 			Boolean deleted, LocalDateTime createdDate,
 			EnUser createdUser, LocalDateTime updatedDate,
@@ -94,12 +93,12 @@ public class EnParticipant extends BaseModel {
 	}
 
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
 	
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -43,12 +43,11 @@ public class TyProfile extends BaseModel {
     private List<JnProfilePriv> profilePrivs;
 	
 	public TyProfile() {} 
-	public TyProfile(Long id) {super(id);} 
+	public TyProfile(Long id) {this.id = id;} 
 	
 	public TyProfile(Long id, String name, String code,
 			Boolean deleted, String description,
 			List<JnProfilePriv> profilePrivs) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.code = code;

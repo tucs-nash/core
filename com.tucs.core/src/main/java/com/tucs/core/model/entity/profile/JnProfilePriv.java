@@ -51,7 +51,7 @@ public class JnProfilePriv extends BaseModel {
 	private LocalDateTime createdDate;
 
 	public JnProfilePriv() {} 
-	public JnProfilePriv(Long id) {super(id);} 
+	public JnProfilePriv(Long id) {this.id = id;} 
 	
 	public JnProfilePriv(Long id, TyProfile profile, TyPrivilege privilege, LocalDateTime createdDate) {
 		this.id = id;

@@ -4,14 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -28,10 +27,10 @@ public class EnSavings extends BaseModel {
 	private static final long serialVersionUID = 3878082938034932696L;
 
 	@Id
-	@SequenceGenerator(name="EN_SAVINGS_SQ", sequenceName="EN_SAVINGS_SQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EN_SAVINGS_SQ")
-	@Column(name="ID")
-	private Long id;
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")	
+	@Column(name="ID", length=255)
+	private String id;
 	
 	@NotNull
 	@Column(nullable=false, name="BALANCE", precision=12, scale=4)
@@ -65,9 +64,9 @@ public class EnSavings extends BaseModel {
 	private EnUser updatedUser;
 	
 	public EnSavings() {} 
-	public EnSavings(Long id) {super(id);} 
+	public EnSavings(String id) {this.id = id;} 
 	
-	public EnSavings(Long id, Double balance,
+	public EnSavings(String id, Double balance,
 			EnControl control, LocalDateTime createdDate,
 			EnUser createdUser, LocalDateTime updatedDate,
 			EnUser updatedUser) {
@@ -80,11 +79,11 @@ public class EnSavings extends BaseModel {
 		this.updatedUser = updatedUser;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

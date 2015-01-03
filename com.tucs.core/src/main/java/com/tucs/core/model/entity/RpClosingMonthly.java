@@ -4,14 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -27,10 +26,10 @@ public class RpClosingMonthly extends BaseModel {
 	private static final long serialVersionUID = -862442219153589632L;
 	
 	@Id
-	@SequenceGenerator(name="RP_CLOSING_MONTHLY_SQ", sequenceName="RP_CLOSING_MONTHLY_SQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="RP_CLOSING_MONTHLY_SQ")
-	@Column(name="ID")
-	private Long id;
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")	
+	@Column(name="ID", length=255)
+	private String id;
 
 	@NotNull
 	@Column(nullable=false, name="BALANCE", precision=12, scale=4)
@@ -73,14 +72,13 @@ public class RpClosingMonthly extends BaseModel {
 	private EnUser updatedUser;
 	
     public RpClosingMonthly() {} 
-	public RpClosingMonthly(Long id) {super(id);} 
+	public RpClosingMonthly(String id) {this.id = id;} 
 
-	public RpClosingMonthly(Long id, Double balance,
+	public RpClosingMonthly(String id, Double balance,
 			Double budget, EnControlMonthly controlMonthly,
 			EnCategory category, LocalDateTime createdDate,
 			EnUser createdUser, LocalDateTime updatedDate,
 			EnUser updatedUser) {
-		super();
 		this.id = id;
 		this.balance = balance;
 		this.budget = budget;
@@ -93,12 +91,12 @@ public class RpClosingMonthly extends BaseModel {
 	}
 
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
 	
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

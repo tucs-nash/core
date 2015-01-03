@@ -3,12 +3,11 @@ package com.tucs.core.model.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
@@ -30,10 +29,10 @@ public class EnUser extends BaseModel {
 	}
 
 	@Id
-	@SequenceGenerator(name="EN_USER_SQ", sequenceName="EN_USER_SQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="EN_USER_SQ")
-	@Column(name="ID")
-	private Long id;
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")	
+	@Column(name="ID", length=255)
+	private String id;
 	
 	@NotNull
 	@Column(nullable=false, length=255, name="FIRSTNAME")
@@ -82,15 +81,14 @@ public class EnUser extends BaseModel {
 	private LocalDateTime updatedDate;	
 	
 	public EnUser() {} 
-	public EnUser(Long id) {super(id);} 
+	public EnUser(String id) {this.id = id;} 
 	
-	public EnUser(Long id, String firstName,
+	public EnUser(String id, String firstName,
 			String lastName, String password, String email,
 			TypeUser typeUser, String phone,
 			Boolean deleted, Boolean forgotPassword,
 			String language, LocalDateTime createdDate,
 			LocalDateTime updatedDate) {
-		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -104,12 +102,12 @@ public class EnUser extends BaseModel {
 		this.createdDate = createdDate;
 		this.updatedDate = updatedDate;
 	}
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
 	
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
