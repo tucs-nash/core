@@ -1,5 +1,7 @@
 package com.tucs.core.model.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -22,12 +25,7 @@ import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 @Entity
 @Table(name="EN_CONTROL")
 public class EnControl extends BaseModel {
-	
-	public enum TypeSplit {
-		PER_GROUP,
-		PER_PERSON
-	}
-	
+		
 	private static final long serialVersionUID = 1612200128795081944L;
 	
 	@Id
@@ -52,6 +50,10 @@ public class EnControl extends BaseModel {
 	private TypeSplit typeSplit;
 	
 	@NotNull
+	@Column(nullable=false,name="SHARED")
+	private Boolean shared;
+	
+	@NotNull
 	@Column(nullable=false,name="HAS_CLOSING")
 	private Boolean hasClosing;
 
@@ -59,6 +61,9 @@ public class EnControl extends BaseModel {
 	@Column(nullable=false,name="HAS_SAVINGS")
 	private Boolean hasSaving;
 
+	@Column(name="AUTOMATIC_CLOSING")
+	private AutomaticClosing automaticClosing;
+	
 	@Column(name="BALANCE_DEFAULT", precision=12, scale=4)
 	private Double balanceDefault;
 	
@@ -93,13 +98,16 @@ public class EnControl extends BaseModel {
 	@JoinColumn(name="UPDATED_USER_ID")
 	private EnUser updatedUser;
 	
+	@OneToMany(mappedBy = "control", fetch = FetchType.LAZY)
+	private List<EnGroup> enGroups;
+	
 	public EnControl() {} 
 	public EnControl(String id) {this.id = id;} 
 	
 	public EnControl(String id, String name,
 			String description, Long startDay,
-			TypeSplit typeSplit, Boolean hasClosing,
-			Boolean hasSaving, Double balanceDefault,
+			TypeSplit typeSplit, Boolean shared, Boolean hasClosing,
+			Boolean hasSaving, AutomaticClosing automaticClosing ,Double balanceDefault,
 			TyCurrency currency, Boolean deleted,
 			LocalDateTime createdDate, EnUser createdUser,
 			LocalDateTime updatedDate, EnUser updatedUser) {
@@ -108,8 +116,10 @@ public class EnControl extends BaseModel {
 		this.description = description;
 		this.startDay = startDay;
 		this.typeSplit = typeSplit;
+		this.shared = shared;
 		this.hasClosing = hasClosing;
 		this.hasSaving = hasSaving;
+		this.automaticClosing = automaticClosing;
 		this.balanceDefault = balanceDefault;
 		this.currency = currency;
 		this.deleted = deleted;
@@ -119,19 +129,47 @@ public class EnControl extends BaseModel {
 		this.updatedUser = updatedUser;
 	}
 
+	public EnControl(String id, String name,
+			String description, Long startDay,
+			TypeSplit typeSplit, Boolean shared, Boolean hasClosing,
+			Boolean hasSaving, AutomaticClosing automaticClosing, Double balanceDefault,
+			TyCurrency currency, Boolean deleted,
+			LocalDateTime createdDate, EnUser createdUser,
+			LocalDateTime updatedDate, EnUser updatedUser,
+			List<EnGroup> enGroups) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.startDay = startDay;
+		this.typeSplit = typeSplit;
+		this.shared = shared;
+		this.hasClosing = hasClosing;
+		this.hasSaving = hasSaving;
+		this.automaticClosing = automaticClosing;
+		this.balanceDefault = balanceDefault;
+		this.currency = currency;
+		this.deleted = deleted;
+		this.createdDate = createdDate;
+		this.createdUser = createdUser;
+		this.updatedDate = updatedDate;
+		this.updatedUser = updatedUser;
+		this.enGroups = enGroups;
+	}
+
+	
+	
 	public String getId() {
 		return id;
 	}
-
+	
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	
 	public String getName() {
 		return name;
 	}
-
 	
 	public void setName(String name) {
 		this.name = name;
@@ -140,104 +178,135 @@ public class EnControl extends BaseModel {
 	public String getDescription() {
 		return description;
 	}
-
 	
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	
 	public Long getStartDay() {
 		return startDay;
 	}
-
+	
 	public void setStartDay(Long startDay) {
 		this.startDay = startDay;
+	}
+	
+	public TypeSplit getTypeSplit() {
+		return typeSplit;
+	}
+	
+	public void setTypeSplit(TypeSplit typeSplit) {
+		this.typeSplit = typeSplit;
+	}
+	
+	public Boolean getShared() {
+		return shared;
+	}
+	
+	public void setShared(Boolean shared) {
+		this.shared = shared;
 	}
 	
 	public Boolean getHasClosing() {
 		return hasClosing;
 	}
-
 	
 	public void setHasClosing(Boolean hasClosing) {
 		this.hasClosing = hasClosing;
 	}
-
 	
 	public Boolean getHasSaving() {
 		return hasSaving;
 	}
-
 	
 	public void setHasSaving(Boolean hasSaving) {
 		this.hasSaving = hasSaving;
 	}
-
+	
+	public AutomaticClosing getAutomaticClosing() {
+		return automaticClosing;
+	}
+	
+	public void setAutomaticClosing(
+			AutomaticClosing automaticClosing) {
+		this.automaticClosing = automaticClosing;
+	}
 	
 	public Double getBalanceDefault() {
 		return balanceDefault;
 	}
-
+	
 	public void setBalanceDefault(Double balanceDefault) {
 		this.balanceDefault = balanceDefault;
 	}
-
+	
 	public TyCurrency getCurrency() {
 		return currency;
 	}
-
+	
 	public void setCurrency(TyCurrency currency) {
 		this.currency = currency;
 	}
-
+	
 	public Boolean getDeleted() {
 		return deleted;
 	}
-
 	
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
-
 	
 	public LocalDateTime getCreatedDate() {
 		return createdDate;
 	}
-
 	
 	public void setCreatedDate(LocalDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
-
 	
 	public EnUser getCreatedUser() {
 		return createdUser;
 	}
-
 	
 	public void setCreatedUser(EnUser createdUser) {
 		this.createdUser = createdUser;
 	}
-
 	
 	public LocalDateTime getUpdatedDate() {
 		return updatedDate;
 	}
-
 	
 	public void setUpdatedDate(LocalDateTime updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
 	
 	public EnUser getUpdatedUser() {
 		return updatedUser;
 	}
-
 	
 	public void setUpdatedUser(EnUser updatedUser) {
 		this.updatedUser = updatedUser;
 	}
 	
+	public List<EnGroup> getEnGroups() {
+		return enGroups;
+	}
+	
+	public void setEnGroups(List<EnGroup> enGroups) {
+		this.enGroups = enGroups;
+	}
+
+
+	public enum TypeSplit {
+		TYPE_SPLIT_GROUP,
+		TYPE_SPLIT_PERSON
+		;
+	}
+
+	public enum AutomaticClosing {
+		AUTO_CLOSING_NO,
+		AUTO_CLOSING_WHEN_MONTH_CHANGE,
+		AUTO_CLOSING_AFTER_FIVE_DAY
+		;
+	}	
 }

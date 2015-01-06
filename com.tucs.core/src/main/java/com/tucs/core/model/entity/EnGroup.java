@@ -1,5 +1,7 @@
 package com.tucs.core.model.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -38,10 +41,6 @@ public class EnGroup extends BaseModel {
 	@Column(length=255, name="DESCRIPTION")
 	private String description;
 	
-	@NotNull
-	@Column(nullable=false,name="SHARED")
-	private Boolean shared;
-
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="GROUP_PARENT_ID")
 	private EnGroup groupParent;
@@ -81,12 +80,15 @@ public class EnGroup extends BaseModel {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="UPDATED_USER_ID")
 	private EnUser updatedUser;
+		
+	@OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
+	private List<EnParticipant> enParticipants;
 
 	public EnGroup() {} 
 	public EnGroup(String id) {this.id = id;} 
 	
 	public EnGroup(String id, String name,
-			String description, Boolean shared,
+			String description,
 			EnGroup groupParent, EnControl control,
 			EnUser ownerUser, Boolean deleted,
 			LocalDateTime createdDate, EnUser createdUser,
@@ -94,7 +96,6 @@ public class EnGroup extends BaseModel {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.shared = shared;
 		this.groupParent = groupParent;
 		this.control = control;
 		this.ownerUser = ownerUser;
@@ -133,16 +134,6 @@ public class EnGroup extends BaseModel {
 	
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	
-	public Boolean getShared() {
-		return shared;
-	}
-
-	
-	public void setShared(Boolean shared) {
-		this.shared = shared;
 	}
 
 	

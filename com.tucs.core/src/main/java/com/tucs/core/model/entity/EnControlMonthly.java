@@ -55,14 +55,14 @@ public class EnControlMonthly extends BaseModel {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	@JoinColumn(nullable = false, name="START_DATE")
+	@Column(nullable = false, name="START_DATE")
 	protected LocalDate startDate;
 
 	@NotNull
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	@JoinColumn(nullable = false, name="END_DATE")
+	@Column(nullable = false, name="END_DATE")
 	protected LocalDate endDate;
 	
 	@NotNull
