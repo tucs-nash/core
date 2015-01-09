@@ -37,9 +37,13 @@ public class EnGroup extends BaseModel {
 	@NotNull
 	@Column(nullable=false,length=50, name="NAME")
 	private String name;
-	
+
 	@Column(length=255, name="DESCRIPTION")
 	private String description;
+	
+	@NotNull
+	@Column(nullable=false, name="AMOUNT_PARTICIPANT")
+	private Long amountParticipant;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="GROUP_PARENT_ID")
@@ -51,7 +55,7 @@ public class EnGroup extends BaseModel {
 	private EnControl control;
 	
 	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(nullable=false, name="OWNER_USER_ID")
 	private EnUser ownerUser;
 	
@@ -86,9 +90,9 @@ public class EnGroup extends BaseModel {
 
 	public EnGroup() {} 
 	public EnGroup(String id) {this.id = id;} 
-	
+		
 	public EnGroup(String id, String name,
-			String description,
+			Long amountParticipant, String description,
 			EnGroup groupParent, EnControl control,
 			EnUser ownerUser, Boolean deleted,
 			LocalDateTime createdDate, EnUser createdUser,
@@ -96,6 +100,7 @@ public class EnGroup extends BaseModel {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.amountParticipant = amountParticipant;
 		this.groupParent = groupParent;
 		this.control = control;
 		this.ownerUser = ownerUser;
@@ -105,8 +110,29 @@ public class EnGroup extends BaseModel {
 		this.updatedDate = updatedDate;
 		this.updatedUser = updatedUser;
 	}
-
 	
+	public EnGroup(String id, String name,
+			Long amountParticipant, String description,
+			EnGroup groupParent, EnControl control,
+			EnUser ownerUser, Boolean deleted,
+			LocalDateTime createdDate, EnUser createdUser,
+			LocalDateTime updatedDate, EnUser updatedUser,
+			List<EnParticipant> enParticipants) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.amountParticipant = amountParticipant;
+		this.groupParent = groupParent;
+		this.control = control;
+		this.ownerUser = ownerUser;
+		this.deleted = deleted;
+		this.createdDate = createdDate;
+		this.createdUser = createdUser;
+		this.updatedDate = updatedDate;
+		this.updatedUser = updatedUser;
+		this.enParticipants = enParticipants;
+	}
 	public String getId() {
 		return id;
 	}
@@ -137,6 +163,13 @@ public class EnGroup extends BaseModel {
 	}
 
 	
+	public Long getAmountParticipant() {
+		return amountParticipant;
+	}
+	public void setAmountParticipant(
+			Long amountParticipant) {
+		this.amountParticipant = amountParticipant;
+	}
 	public EnGroup getGroupParent() {
 		return groupParent;
 	}

@@ -12,11 +12,17 @@ public class ControlLookupsDto {
 	private List<TyCurrency> currencies;
 	private TypeSplit[] splities;
 	private AutomaticClosing[] automatics;
+	private Integer[] startDays;
 	
 	
 	public ControlLookupsDto() {
 		this.splities = TypeSplit.values();		
-		this.automatics = AutomaticClosing.values();			
+		this.automatics = AutomaticClosing.values();		
+		this.startDays = new Integer[31];
+		int index =0;
+		for (int i=1; i< 32 ; i++) {
+			this.startDays[index++] = i;
+		}
 	}
 
 	public ControlLookupsDto(List<TyCurrency> currencies) {
@@ -48,5 +54,13 @@ public class ControlLookupsDto {
 
 	public void setAutomatics(AutomaticClosing[] automatics) {
 		this.automatics = automatics;
+	}
+
+	public Integer[] getStartDays() {
+		return startDays;
+	}
+
+	public void setStartDays(Integer[] startDays) {
+		this.startDays = startDays;
 	}	
 }

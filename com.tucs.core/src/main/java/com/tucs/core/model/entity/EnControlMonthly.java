@@ -76,6 +76,10 @@ public class EnControlMonthly extends BaseModel {
 	private EnGroup group;
 	
 	@NotNull
+	@Column(nullable=false,name="CURRENT_MONTHLY")
+	private Boolean currentMonthly;
+	
+	@NotNull
 	@Column(nullable=false,name="CLOSED")
 	private Boolean closed;
 	
@@ -91,18 +95,15 @@ public class EnControlMonthly extends BaseModel {
 	@Column(name="UPDATED_DATE")
 	private LocalDateTime updatedDate;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="UPDATED_USER_ID")
-	private EnUser updatedUser;
-	
 	public EnControlMonthly() {} 
-	public EnControlMonthly(String id) {this.id = id;} 
+	public EnControlMonthly(String id) {this.id = id;}
 	
-	public EnControlMonthly(String id, Long month, Long year,
-			Double balanceRevenue, Double balanceExpense,
-			LocalDate startDate, LocalDate endDate,
-			EnControl control, Boolean closed,
-			LocalDateTime closedDate,
+	public EnControlMonthly(String id, Long month,
+			Long year, Double balanceRevenue,
+			Double balanceExpense, LocalDate startDate,
+			LocalDate endDate, EnControl control,
+			EnGroup group, Boolean currentMonthly,
+			Boolean closed, LocalDateTime closedDate,
 			LocalDateTime updatedDate, EnUser updatedUser) {
 		this.id = id;
 		this.month = month;
@@ -112,129 +113,115 @@ public class EnControlMonthly extends BaseModel {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.control = control;
+		this.group = group;
+		this.currentMonthly = currentMonthly;
 		this.closed = closed;
 		this.closedDate = closedDate;
 		this.updatedDate = updatedDate;
-		this.updatedUser = updatedUser;
 	}
-
+	
 	public String getId() {
 		return id;
 	}
-
+	
 	public void setId(String id) {
 		this.id = id;
 	}
-
 	
 	public Long getMonth() {
 		return month;
 	}
-
 	
 	public void setMonth(Long month) {
 		this.month = month;
 	}
-
 	
 	public Long getYear() {
 		return year;
 	}
-
 	
 	public void setYear(Long year) {
 		this.year = year;
 	}
-
 	
 	public Double getBalanceRevenue() {
 		return balanceRevenue;
 	}
-
 	
 	public void setBalanceRevenue(Double balanceRevenue) {
 		this.balanceRevenue = balanceRevenue;
 	}
-
 	
 	public Double getBalanceExpense() {
 		return balanceExpense;
 	}
-
 	
 	public void setBalanceExpense(Double balanceExpense) {
 		this.balanceExpense = balanceExpense;
 	}
-
 	
 	public LocalDate getStartDate() {
 		return startDate;
 	}
-
 	
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
-
 	
 	public LocalDate getEndDate() {
 		return endDate;
 	}
-
 	
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
-
 	
 	public EnControl getControl() {
 		return control;
 	}
-
 	
 	public void setControl(EnControl control) {
 		this.control = control;
 	}
-
+	
+	public EnGroup getGroup() {
+		return group;
+	}
+	
+	public void setGroup(EnGroup group) {
+		this.group = group;
+	}
+	
+	public Boolean getCurrentMonthly() {
+		return currentMonthly;
+	}
+	
+	public void setCurrentMonthly(Boolean currentMonthly) {
+		this.currentMonthly = currentMonthly;
+	}
 	
 	public Boolean getClosed() {
 		return closed;
 	}
-
 	
 	public void setClosed(Boolean closed) {
 		this.closed = closed;
 	}
-
 	
 	public LocalDateTime getClosedDate() {
 		return closedDate;
 	}
-
 	
 	public void setClosedDate(LocalDateTime closedDate) {
 		this.closedDate = closedDate;
 	}
-
 	
 	public LocalDateTime getUpdatedDate() {
 		return updatedDate;
 	}
-
 	
 	public void setUpdatedDate(LocalDateTime updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
-	
-	public EnUser getUpdatedUser() {
-		return updatedUser;
-	}
-
-	
-	public void setUpdatedUser(EnUser updatedUser) {
-		this.updatedUser = updatedUser;
-	}	
-	
-	
+		
 }
