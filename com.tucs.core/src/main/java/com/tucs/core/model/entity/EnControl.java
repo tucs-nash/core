@@ -83,7 +83,6 @@ public class EnControl extends BaseModel {
 	@Column(nullable = false, name="CREATED_DATE", updatable=false)
 	private LocalDateTime createdDate;
 	
-	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(nullable=false, name="CREATED_USER_ID", updatable=false)
 	private EnUser createdUser;

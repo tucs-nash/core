@@ -71,7 +71,7 @@ public class EnControlMonthly extends BaseModel {
 	private EnControl control;
 
 	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(nullable=false, name="GROUP_ID")
 	private EnGroup group;
 	
