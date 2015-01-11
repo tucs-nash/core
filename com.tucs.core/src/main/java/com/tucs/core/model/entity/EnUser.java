@@ -68,7 +68,7 @@ public class EnUser extends BaseModel {
 	private Boolean forgotPassword;
 
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(nullable=false, name="LANGUAGE_ID")
+	@JoinColumn(name="LANGUAGE_ID")
 	private TyLanguage language;
 	
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
