@@ -34,7 +34,7 @@ public class EnUser extends BaseModel {
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")	
-	@Column(name="ID", length=255, updatable = false)
+	@Column(name="ID", length=255)
 	private String id;
 	
 	@NotNull
