@@ -2,8 +2,11 @@ package com.tucs.core.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -23,9 +26,9 @@ public class EnUser extends BaseModel {
 	private static final long serialVersionUID = 4172343689115020486L;
 	
 	public enum TypeUser {
-		ADMIN,
-		PREMIUM,
-		NORMAL
+		TYPE_USER_ADMIN,
+		TYPE_USER_PREMIUM,
+		TYPE_USER_NORMAL
 	}
 
 	@Id
@@ -64,8 +67,9 @@ public class EnUser extends BaseModel {
 	@Column(nullable=false, name="FORGOT_PASSWORD")
 	private Boolean forgotPassword;
 
-	@Column(length=10,name="LANGUAGE")
-	private String language;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(nullable=false, name="LANGUAGE_ID")
+	private TyLanguage language;
 	
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -87,7 +91,7 @@ public class EnUser extends BaseModel {
 			String lastName, String password, String email,
 			TypeUser typeUser, String phone,
 			Boolean deleted, Boolean forgotPassword,
-			String language, LocalDateTime createdDate,
+			TyLanguage language, LocalDateTime createdDate,
 			LocalDateTime updatedDate) {
 		this.id = id;
 		this.firstName = firstName;
@@ -188,12 +192,12 @@ public class EnUser extends BaseModel {
 	}
 
 	
-	public String getLanguage() {
+	public TyLanguage getLanguage() {
 		return language;
 	}
 
 	
-	public void setLanguage(String language) {
+	public void setLanguage(TyLanguage language) {
 		this.language = language;
 	}
 
