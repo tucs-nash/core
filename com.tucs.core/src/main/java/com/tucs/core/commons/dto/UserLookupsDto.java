@@ -2,9 +2,6 @@ package com.tucs.core.commons.dto;
 
 import java.util.List;
 
-import com.tucs.core.model.entity.TyCurrency;
-import com.tucs.core.model.entity.EnControl.AutomaticClosing;
-import com.tucs.core.model.entity.EnControl.TypeSplit;
 import com.tucs.core.model.entity.EnUser.TypeUser;
 import com.tucs.core.model.entity.TyLanguage;
 
@@ -19,7 +16,7 @@ public class UserLookupsDto {
 	
 	public UserLookupsDto(List<TyLanguage> languages){
 		this();
-		this.languages = languages;
+		this.setLanguages(languages);
 	}
 
 	public TypeUser[] getAccounts() {
@@ -28,6 +25,14 @@ public class UserLookupsDto {
 
 	public void setAccounts(TypeUser[] accounts) {
 		this.accounts = accounts;
+	}
+
+	public List<TyLanguage> getLanguages() {
+		return languages;
+	}
+
+	public void setLanguages(List<TyLanguage> languages) {
+		this.languages = languages;
 	}
 	
 }
