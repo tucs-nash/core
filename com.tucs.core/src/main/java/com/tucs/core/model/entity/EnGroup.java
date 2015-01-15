@@ -53,12 +53,7 @@ public class EnGroup extends BaseModel {
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(nullable=false, name="CONTROL_ID")
 	private EnControl control;
-	
-	@NotNull
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(nullable=false, name="OWNER_USER_ID")
-	private EnUser ownerUser;
-	
+
 	@NotNull
 	@Column(nullable=false,name="DELETED")
 	private Boolean deleted;
@@ -103,7 +98,6 @@ public class EnGroup extends BaseModel {
 		this.amountParticipant = amountParticipant;
 		this.groupParent = groupParent;
 		this.control = control;
-		this.ownerUser = ownerUser;
 		this.deleted = deleted;
 		this.createdDate = createdDate;
 		this.createdUser = createdUser;
@@ -125,7 +119,6 @@ public class EnGroup extends BaseModel {
 		this.amountParticipant = amountParticipant;
 		this.groupParent = groupParent;
 		this.control = control;
-		this.ownerUser = ownerUser;
 		this.deleted = deleted;
 		this.createdDate = createdDate;
 		this.createdUser = createdUser;
@@ -189,17 +182,6 @@ public class EnGroup extends BaseModel {
 		this.control = control;
 	}
 
-	
-	public EnUser getOwnerUser() {
-		return ownerUser;
-	}
-
-	
-	public void setOwnerUser(EnUser ownerUser) {
-		this.ownerUser = ownerUser;
-	}
-
-	
 	public Boolean getDeleted() {
 		return deleted;
 	}
