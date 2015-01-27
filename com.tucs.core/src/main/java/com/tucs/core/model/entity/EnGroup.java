@@ -61,11 +61,9 @@ public class EnGroup extends BaseModel {
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-	@NotNull
 	@Column(nullable = false, name="CREATED_DATE", updatable=false)
 	private LocalDateTime createdDate;
 	
-	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(nullable=false, name="CREATED_USER_ID", updatable=false)
 	private EnUser createdUser;
@@ -229,6 +227,12 @@ public class EnGroup extends BaseModel {
 	
 	public void setUpdatedUser(EnUser updatedUser) {
 		this.updatedUser = updatedUser;
+	}
+	public List<EnParticipant> getEnParticipants() {
+		return enParticipants;
+	}
+	public void setEnParticipants(List<EnParticipant> enParticipants) {
+		this.enParticipants = enParticipants;
 	}
 
 	

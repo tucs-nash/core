@@ -54,11 +54,9 @@ public class EnParticipant extends BaseModel {
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-	@NotNull
 	@Column(nullable = false, name="CREATED_DATE", updatable=false)
 	private LocalDateTime createdDate;
 	
-	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(nullable=false, name="CREATED_USER_ID", updatable=false)
 	private EnUser createdUser;

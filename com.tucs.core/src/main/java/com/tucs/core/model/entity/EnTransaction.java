@@ -25,6 +25,12 @@ public class EnTransaction extends BaseModel {
 	
 	private static final long serialVersionUID = 1612200128795081944L;
 	
+	public enum TypeTransaction {
+		CREDIT,
+		DEBIT
+		;
+	}
+	
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid2")	
@@ -39,8 +45,8 @@ public class EnTransaction extends BaseModel {
 	private Double value;
 	
 	@NotNull
-	@Column(length=1, nullable=false,name="MONTHLY")
-	private Character type;
+	@Column(nullable=false,name="TYPE")
+	private TypeTransaction type;
 
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -74,7 +80,7 @@ public class EnTransaction extends BaseModel {
 	private EnControl control;
 	
 	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(nullable=false, name="CATEGORY_ID")
 	private EnCategory category;
 
@@ -85,11 +91,9 @@ public class EnTransaction extends BaseModel {
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-	@NotNull
 	@Column(nullable = false, name="CREATED_DATE", updatable=false)
 	private LocalDateTime createdDate;
 	
-	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(nullable=false, name="CREATED_USER_ID", updatable=false)
 	private EnUser createdUser;
@@ -108,7 +112,7 @@ public class EnTransaction extends BaseModel {
 	public EnTransaction(String id) {this.id = id;} 
 	
 	public EnTransaction(String id, String description,
-			Double value, Character type,
+			Double value, TypeTransaction type,
 			LocalDateTime dateTransaction,
 			Boolean scheduled, Long trancheCurrent,
 			Long trancheEnd, Boolean notification,
@@ -167,12 +171,12 @@ public class EnTransaction extends BaseModel {
 	}
 
 	
-	public Character getType() {
+	public TypeTransaction getType() {
 		return type;
 	}
 
 	
-	public void setType(Character type) {
+	public void setType(TypeTransaction type) {
 		this.type = type;
 	}
 

@@ -79,7 +79,6 @@ public class EnControl extends BaseModel {
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-	@NotNull
 	@Column(nullable = false, name="CREATED_DATE", updatable=false)
 	private LocalDateTime createdDate;
 	
